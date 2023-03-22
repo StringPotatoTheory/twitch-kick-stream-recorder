@@ -1,12 +1,23 @@
-# Ancalentari Twitch Stream Recorder
-This script allows you to record twitch streams live to .mp4 files.  
-It is an improved version of [junian's twitch-recorder](https://gist.github.com/junian/b41dd8e544bf0e3980c971b0d015f5f6), migrated to [**helix**](https://dev.twitch.tv/docs/api) - the new twitch API. It uses OAuth2.
+# Twitch and Kick Stream Recorder
+
+This script allows you to record twitch streams and kick streams live to .mp4 files.
+
+This is a fork of [ancalentari's twitch-stream-recorder](https://github.com/ancalentari/twitch-stream-recorder) which is an improved version of [junian's twitch-recorder](https://gist.github.com/junian/b41dd8e544bf0e3980c971b0d015f5f6), migrated to [**helix**](https://dev.twitch.tv/docs/api) - the new twitch API. It uses OAuth2.
+
 ## Requirements
+
 1. [python3.8](https://www.python.org/downloads/release/python-380/) or higher  
 2. [streamlink](https://streamlink.github.io/)  
 3. [ffmpeg](https://ffmpeg.org/)
 
+## Upcoming Features
+
+- [ ] record streams live from kick
+- [ ] add twitch cookie header so you can download streams live with no ads (if you have a sub to that channel or twitch turbo)
+- [ ] set up a pre-made config file
+
 ## Setting up
+
 1) Check if you have latest version of streamlink:
     * `streamlink --version` shows current version
     * `streamlink --version-check` shows available upgrade
@@ -15,10 +26,11 @@ It is an improved version of [junian's twitch-recorder](https://gist.github.com/
 2) Install `requests` module [if you don't have it](https://pypi.org/project/requests/)  
    * Windows:    ```python -m pip install requests```  
    * Linux:      ```python3.8 -m pip install requests```
+
 3) Create `config.py` file in the same directory as `twitch-recorder.py` with:
 ```properties
-root_path = "/home/abathur/Videos/twitch"
-username = "forsen"
+root_path = "/home/<username>/Videos/twitch"
+username = "hasanabi"
 client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 client_secret = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 ```
@@ -28,15 +40,18 @@ client_secret = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 `client_secret` - you generate this [here](https://dev.twitch.tv/console/apps) as well, for your registered application
 
 ## Running script
+
 The script will be logging to a console and to a file `twitch-recorder.log`
+
 ### On linux
+
 Run the script
 ```shell script
 python3.8 twitch-recorder.py
 ```
 To record a specific streamer use `-u` or `--username`
 ```shell script
-python3.8 twitch-recorder.py --username forsen
+python3.8 twitch-recorder.py --username hasanabi
 ```
 To specify quality use `-q` or `--quality`
 ```shell script
@@ -66,9 +81,13 @@ And now you can just kill the job:
 ```shell script
 kill %1
 ```
+
 ### On Windows
-You can run the scipt from `cmd` or [terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab), by simply going to the directory where the script is located at and using command:
+
+You can run the script from `cmd` or [terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab), by simply going to the directory where the script is located at and using command:
+
 ```shell script
 python twitch-recorder.py
 ```
+
 The optional parameters should work exactly the same as on Linux.
