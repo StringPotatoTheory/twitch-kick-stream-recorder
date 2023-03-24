@@ -33,6 +33,11 @@ class TwitchRecorder:
         self.username = config.username
         self.quality = "best"
 
+        try:
+            self.auth_header = config.auth_header
+        except:
+            self.auth_header = ""
+
         # twitch configuration
         self.client_id = config.client_id
         self.client_secret = config.client_secret
@@ -139,8 +144,7 @@ class TwitchRecorder:
 
                 channels = info["data"]
                 channel = next(iter(channels), None)
-                filename = self.username + " - " + datetime.datetime.now() \
-                    .strftime("%Y-%m-%d %Hh%Mm%Ss") + " - " + channel.get("title") + ".mp4"
+                filename = datetime.datetime.now().strftime("%Y-%m-%d %Hh%Mm%Ss") + " - " + channel.get("title") + ".mp4"
 
                 # clean filename from unnecessary characters
                 filename = "".join(x for x in filename if x.isalnum() or x in [" ", "-", "_", "."])
@@ -148,10 +152,12 @@ class TwitchRecorder:
                 recorded_filename = os.path.join(recorded_path, filename)
                 processed_filename = os.path.join(processed_path, filename)
 
-                # start streamlink process
-                subprocess.call(
-                    ["streamlink", "--twitch-disable-ads", "twitch.tv/" + self.username, self.quality,
-                     "-o", recorded_filename])
+                if self.auth_header:
+                    subprocess.call(["streamlink", "--twitch-api-header=Authorization=" + self.auth_header, "--twitch-disable-ads", "twitch.tv/" + self.username, self.quality, "-o", recorded_filename])
+                    print("inside auth header")
+                else:
+                    subprocess.call(["streamlink", "--twitch-disable-ads", "twitch.tv/" + self.username, self.quality, "-o", recorded_filename])
+                    print("inside not auth header")
 
                 logging.info("recording stream is done, processing video file")
                 if os.path.exists(recorded_filename) is True:

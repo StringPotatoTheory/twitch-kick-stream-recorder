@@ -13,8 +13,7 @@ This is a fork of [ancalentari's twitch-stream-recorder](https://github.com/anca
 ## Upcoming Features
 
 - [ ] record streams live from kick
-- [ ] add twitch cookie header so you can download streams live with no ads (if you have a sub to that channel or twitch turbo)
-- [ ] set up a pre-made config file
+- [x] add twitch cookie header so you can download streams live with no ads (if you have a sub to that channel or twitch turbo)
 
 ## Setting up
 
@@ -33,11 +32,13 @@ root_path = "/home/<username>/Videos/twitch"
 username = "hasanabi"
 client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 client_secret = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+#auth_header = "OAuth xxxxxxxxxxxxxxxxxxxxx"
 ```
 `root_path` - path to a folder where you want your VODs to be saved to  
 `username` - name of the streamer you want to record by default  
 `client_id` - you can grab this from [here](https://dev.twitch.tv/console/apps) once you register your application  
 `client_secret` - you generate this [here](https://dev.twitch.tv/console/apps) as well, for your registered application
+`auth_header` - login to twitch in your browser, then press f12 to open your console, and run `document.cookie.split("; ").find(item=>item.startsWith("auth-token="))?.split("=")[1]` to get your authorization header (learn more about this [here](https://streamlink.github.io/cli/plugins/twitch.html)). Make sure to leave the `OAuth` and the space THEN add your authorization code, and uncomment the field
 
 ## Running script
 
